@@ -9,4 +9,12 @@ public class Input {
 			this.oldButtons[i] = this.buttons[i];
 		}
 	}
+	
+	public void setKey(int keyCode, boolean down) {
+		try {
+			this.buttons[keyCode] = down;			
+		} catch (Exception ex) {
+			System.out.println("Key not supported");
+		}
+	}
 }

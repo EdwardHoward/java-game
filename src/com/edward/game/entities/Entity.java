@@ -3,18 +3,25 @@ package com.edward.game.entities;
 import java.awt.Graphics;
 
 import com.edward.game.Input;
+import com.edward.game.Screen;
 
 public abstract class Entity {
-	int x;
-	int y;
-	int width;
-	int height;
+	public double x, y, xVelocity, yVelocity;
+	public int width, height;
 	
-	public Entity(int x, int y, int w, int h) {
+	double speed;
+	
+	Screen screen;
+	
+	public Entity(double x, double y, int w, int h) {
 		this.x = x;
 		this.y = y;
 		this.width = w;
 		this.height = h;
+	}
+	
+	public void init(Screen screen) {
+		this.screen = screen;
 	}
 	
 	public abstract void tick(Input input);

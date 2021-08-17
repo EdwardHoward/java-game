@@ -82,7 +82,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
 	
 	public void start() {
 		this.screen = new Screen(this);
-		this.screen.addEntity(new Player(10, 10, 10, 10));
+		this.screen.addEntity(new Player(10, 400, 30, 50));
 		
 		this.running = true;
 		new Thread(this).run();
@@ -95,11 +95,11 @@ public class Game extends Canvas implements Runnable, KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		input.buttons[e.getKeyCode()] = true;
+		input.setKey(e.getKeyCode(), true);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		input.buttons[e.getKeyCode()] = false;
+		input.setKey(e.getKeyCode(), false);
 	}
 }
