@@ -9,13 +9,11 @@ public class Platform extends Entity {
 	
 	public Platform(double x, double y, int w, int h) {
 		super(x, y, w, h);
-
 	}
 
 	@Override
 	public void tick(Input input) {
 		this.yVelocity = this.speed;
-		
 		this.y += this.yVelocity;
 	}
 
