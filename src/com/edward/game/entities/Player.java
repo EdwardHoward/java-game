@@ -7,8 +7,6 @@ import com.edward.game.Input;
 import com.edward.game.Screen;
 
 public class Player extends Entity {
-
-
 	public Player(double x, double y, int w, int h) {
 		super(x, y, w, h);
 
@@ -38,6 +36,7 @@ public class Player extends Entity {
 			this.yVelocity += Screen.GRAVITY;
 		}
 
+		// Player goes below the bottom of screen
 		if(y + this.screen.platformManager.offsetY >= 595) {
 			// End game
 			this.screen.newGame();
