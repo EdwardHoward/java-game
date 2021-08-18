@@ -4,61 +4,107 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.edward.game.entities.Entity;
 import com.edward.game.entities.Platform;
 
 public class PlatformManager {
 	public double currentSpeed = .01;
 	List<Platform> platforms = new ArrayList<Platform>();
-	
-	public PlatformManager() {
+	int platformCount = 0;
+	Screen screen;
+
+	// This is like a camera
+	// g.fillRect(x + offsetX, y + offsetY, w, h);
+	public double offsetX = 0;
+	public double offsetY = 10;
+
+	Entity target;
+
+	public PlatformManager(Screen screen) {
+		this.screen = screen;
+
 		// first floor
-		createPlatform(0, 600 - 100, 800, 40);
+		/*		createPlatform(0, 600 - 100, 800, 40);
 		
-		for(int i = 0; i < 5; i++) {
-			createPlatform((int)(Math.random()* 400), 600 - 100 - (120 * i), 200, 40);
-		}
+				for(int i = 0; i < 6; i++) { 
+					createPlatform((int)(Math.random()* 400), 600 - 100 - (120 * i), 200, 40); 
+				}*/
 	}
 	
-	public void tick(Input input) {
-		for(int i = 0; i < platforms.size(); i++) {
+	public void clear() {
+		this.platforms.clear();
+	}
+
+	public void tick(long dt, Input input) {
+		for (int i = 0; i < platforms.size(); i++) {
 			Platform platform = platforms.get(i);
-			platform.setSpeed(currentSpeed);
-			platform.tick(input);
+
+			platform.tick(dt, input);
 			
-			if(platform.y > 600 - 40) {
-				platform.y = 0 - 40;
+			// When a platform goes below the screen send it back to the top
+			if(platform.y + offsetY >= 595) {
+				platformCount++;
+				
+				platform.y = -offsetY - 120;
+				
+				if(platform.width != 800) {
+					platform.x = Math.random() * 400;
+				}
 			}
+			
+			
 		}
+
+		double targetY = -(this.target.y - 450 + 200);
+		
+		double distance = targetY - this.offsetY;
+
+		if(distance > 1) {
+			this.offsetY = lerp(offsetY, targetY, .1 * dt);
+		}
+		
+		// move the camera automatically
+		//this.offsetY += (1 * (platformCount % 10)) * dt;
 	}
-	
+
 	public void render(Graphics g) {
-		for(int i = 0; i < platforms.size(); i++) {
+		for (int i = 0; i < platforms.size(); i++) {
 			Platform platform = platforms.get(i);
 			platform.render(g);
 		}
 	}
-	
-	public void createPlatform(int x, int y, int width, int height) {
-		platforms.add(new Platform(x, y, width, height));
+
+	public double lerp(double a, double b, double t) {
+		return a + t * (b - a);
 	}
-	
+
+	public void createPlatform(int x, int y, int width, int height) {
+		Platform p = new Platform(x, y, width, height);
+		p.init(this.screen);
+		platforms.add(p);
+	}
+
 	public Platform getPlatformAt(double x, double y, int w, int h) {
-		for(int i = 0; i < platforms.size(); i++) {
+		for (int i = 0; i < platforms.size(); i++) {
 			Platform platform = platforms.get(i);
-			
+
 			double xx = platform.x;
 			double yy = platform.y;
+
 			int ww = platform.width;
-			int hh = platform.height;
-			
-			if(x < xx + ww && 
-			   x + w > xx &&
-			   y < yy + hh && 
-			   y + h > yy) {
+			// We only want to check for the top pixel of the platform
+			int hh = 1;
+
+			if (x < xx + ww && x + w > xx && y < yy + hh && y + h > yy) {
 				return platform;
 			}
 		}
-		
+
 		return null;
+	}
+
+	// Camera points at target
+	public void setTarget(Entity target) {
+		this.target = target;
 	}
 }

@@ -45,20 +45,21 @@ public class Game extends Canvas implements Runnable, KeyListener{
 
 		while(running) {
 			long now = System.nanoTime();
+			
 			unprocessedTime += now - lastTime;
 			lastTime = now;
 			
 			while(unprocessedTime > 0) {
+				tick(1);
 				unprocessedTime -= 1000000000 / 60;
-				tick();
 			}
 			
 			render();
 		}
 	}
 	
-	public void tick() {
-		this.screen.tick(this.input);
+	public void tick(long dt) {
+		this.screen.tick(dt, this.input);
 		this.input.tick();
 	}
 	
@@ -82,7 +83,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
 	
 	public void start() {
 		this.screen = new Screen(this);
-		this.screen.addEntity(new Player(10, 400, 30, 50));
+		this.screen.newGame();
 		
 		this.running = true;
 		new Thread(this).run();

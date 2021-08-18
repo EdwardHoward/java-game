@@ -24,7 +24,7 @@ public abstract class Entity {
 		this.screen = screen;
 	}
 	
-	public abstract void tick(Input input);
+	public abstract void tick(long dt, Input input);
 	
 	public abstract void render(Graphics g);
 }

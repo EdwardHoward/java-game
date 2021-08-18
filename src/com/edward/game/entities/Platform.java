@@ -12,15 +12,14 @@ public class Platform extends Entity {
 	}
 
 	@Override
-	public void tick(Input input) {
-		this.yVelocity = this.speed;
-		this.y += this.yVelocity;
+	public void tick(long dt, Input input) {
+
 	}
 
 	@Override
 	public void render(Graphics g) {
-		int xa = (int) x;
-		int ya = (int) y;
+		int xa = (int) (x + this.screen.platformManager.offsetX);
+		int ya = (int) (y + this.screen.platformManager.offsetY);
 		
 		g.setColor(Color.YELLOW);
 		g.fillRect(xa, ya, this.width, this.height);
