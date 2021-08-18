@@ -17,15 +17,15 @@ public class Player extends Entity {
 
 	@Override
 	public void tick(long dt, Input input) {
-		if (input.buttons[37]) {
+		if (input.buttons[Input.LEFT]) {
 			this.xVelocity = -this.speed;
 		}
 
-		if (input.buttons[39]) {
+		if (input.buttons[Input.RIGHT]) {
 			this.xVelocity = this.speed;
 		}
 
-		if (input.buttons[32] && !input.oldButtons[32] && onGround) {
+		if (input.buttons[Input.JUMP] && !input.oldButtons[Input.JUMP] && onGround) {
 			this.yVelocity -= 17;
 			onGround = false;
 		}
