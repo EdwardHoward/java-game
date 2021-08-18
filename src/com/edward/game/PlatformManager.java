@@ -14,7 +14,7 @@ public class PlatformManager {
 	Screen screen;
 
 	// This is like a camera
-	// g.fillRect(x + offsetX, y + offsetY, w, h);
+	// example: g.fillRect(x + offsetX, y + offsetY, w, h);
 	public double offsetX = 0;
 	public double offsetY = 10;
 
@@ -22,13 +22,6 @@ public class PlatformManager {
 
 	public PlatformManager(Screen screen) {
 		this.screen = screen;
-
-		// first floor
-		/*		createPlatform(0, 600 - 100, 800, 40);
-		
-				for(int i = 0; i < 6; i++) { 
-					createPlatform((int)(Math.random()* 400), 600 - 100 - (120 * i), 200, 40); 
-				}*/
 	}
 	
 	public void clear() {
