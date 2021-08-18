@@ -31,7 +31,6 @@ public class Player extends Entity {
 		}
 
 		// only check sides if going downwards 
-		// (This causes problems if you start going downwards inside a platform)
 		if (yVelocity > 0) {
 			Platform platformX = this.screen.platformManager.getPlatformAt(x + xVelocity, y, width, height);
 
@@ -40,7 +39,7 @@ public class Player extends Entity {
 			} else {
 				if (xVelocity < 0) {
 					this.xVelocity = 0;
-					this.x = platformX.x + platformX.width;
+					this.x = platformX.x + platformX.width; 
 				} else {
 					this.xVelocity = 0;
 					this.x = platformX.x - this.width;
@@ -59,6 +58,7 @@ public class Player extends Entity {
 				// Go up through platforms
 				this.y += this.yVelocity;
 			} else {
+				// Land on top
 				this.yVelocity = 0;
 				this.y = platform.y - this.height;
 
