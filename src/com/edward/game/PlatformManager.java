@@ -50,9 +50,9 @@ public class PlatformManager {
 		double targetY = -(this.target.y - 450 + 300);
 		
 		double distance = targetY - this.offsetY;
-
+		
 		if(distance > 1) {
-			this.offsetY = lerp(offsetY, targetY, .1 * dt);
+			this.offsetY = lerp(offsetY, targetY, .05);
 		}
 		
 		// move the camera automatically
