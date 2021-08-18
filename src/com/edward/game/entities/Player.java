@@ -31,24 +31,35 @@ public class Player extends Entity {
 		}
 
 		// only check sides if going downwards 
-		if (yVelocity > 0) {
-			Platform platformX = this.screen.platformManager.getPlatformAt(x + xVelocity, y, width, height);
-
-			if (platformX == null) {
-				this.x += this.xVelocity;
-			} else {
-				if (xVelocity < 0) {
-					this.xVelocity = 0;
-					this.x = platformX.x + platformX.width; 
-				} else {
-					this.xVelocity = 0;
-					this.x = platformX.x - this.width;
-				}
-			}
-		} else {
-			this.x += this.xVelocity;
+		
+		if(x + xVelocity + width > 784) {
+			// Hit left wall 
+			this.x = 784 - width;
+		} else if(x + xVelocity < 0) {
+			// Hit right wall
+			this.x = 0;
 		}
+		else 
+		{
+			if (yVelocity > 0) {
+				Platform platformX = this.screen.platformManager.getPlatformAt(x + xVelocity, y, width, height);
 
+				if (platformX == null) {
+					this.x += this.xVelocity;
+				} else {
+					if (xVelocity < 0) {
+						this.xVelocity = 0;
+						this.x = platformX.x + platformX.width; 
+					} else {
+						this.xVelocity = 0;
+						this.x = platformX.x - this.width;
+					}
+				}
+			} else {
+				this.x += this.xVelocity;
+			}
+		}
+		
 		Platform platform = this.screen.platformManager.getPlatformAt(x, y + yVelocity, width, height);
 
 		if (platform == null) {
@@ -73,6 +84,7 @@ public class Player extends Entity {
 		}
 
 		if(y + this.screen.platformManager.offsetY >= 595) {
+			// End game
 			this.screen.newGame();
 		}
 	}
@@ -84,5 +96,7 @@ public class Player extends Entity {
 
 		g.setColor(Color.GREEN);
 		g.fillRect(xp, yp, width, height);
+		
+		g.fillRect(783, 100, 1, 1);
 	}
 }
