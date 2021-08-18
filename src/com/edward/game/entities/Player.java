@@ -26,7 +26,7 @@ public class Player extends Entity {
 		}
 
 		if (input.isDownOnce(Input.JUMP) && onGround) {
-			this.yVelocity -= 17;
+			this.yVelocity -= Math.random() > 0.9 ? 30 : 13;
 			onGround = false;
 		}
 
