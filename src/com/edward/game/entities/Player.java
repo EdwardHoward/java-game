@@ -7,7 +7,7 @@ import com.edward.game.Input;
 import com.edward.game.Screen;
 
 public class Player extends Entity {
-	boolean onGround = false;
+
 
 	public Player(double x, double y, int w, int h) {
 		super(x, y, w, h);
@@ -29,53 +29,8 @@ public class Player extends Entity {
 			this.yVelocity -= Math.random() > 0.9 ? 30 : 13;
 			onGround = false;
 		}
-
-		// only check sides if going downwards 
 		
-		if(x + xVelocity + width > 784) {
-			// Hit left wall 
-			this.x = 784 - width;
-		} else if(x + xVelocity < 0) {
-			// Hit right wall
-			this.x = 0;
-		}
-		else 
-		{
-			if (yVelocity > 0) {
-				Platform platformX = this.screen.platformManager.getPlatformAt(x + xVelocity, y, width, height);
-
-				if (platformX == null) {
-					this.x += this.xVelocity;
-				} else {
-					if (xVelocity < 0) {
-						this.xVelocity = 0;
-						this.x = platformX.x + platformX.width; 
-					} else {
-						this.xVelocity = 0;
-						this.x = platformX.x - this.width;
-					}
-				}
-			} else {
-				this.x += this.xVelocity;
-			}
-		}
-		
-		Platform platform = this.screen.platformManager.getPlatformAt(x, y + yVelocity, width, height);
-
-		if (platform == null) {
-			this.y += this.yVelocity;
-		} else {
-			if (this.yVelocity < 0) {
-				// Go up through platforms
-				this.y += this.yVelocity;
-			} else {
-				// Land on top
-				this.yVelocity = 0;
-				this.y = platform.y - this.height;
-
-				onGround = true;
-			}
-		}
+		tryMove();
 
 		this.xVelocity *= Screen.FRICTION;
 
