@@ -7,8 +7,8 @@ public class Input {
 	public static final int RIGHT = 1;
 	public static final int JUMP = 2;
 	
-	public boolean[] buttons = new boolean[3];
-	public boolean[] oldButtons = new boolean[3];
+	private boolean[] buttons = new boolean[3];
+	private boolean[] oldButtons = new boolean[3];
 	
 	public void tick() {
 		for(int i = 0; i < buttons.length; i++) {
@@ -28,5 +28,13 @@ public class Input {
 		} catch (Exception ex) {
 			System.out.println("Key not supported");
 		}
+	}
+	
+	public boolean isDown(int key) {
+		return buttons[key];
+	}
+	
+	public boolean isDownOnce(int key) {
+		return buttons[key] && !oldButtons[key];
 	}
 }
