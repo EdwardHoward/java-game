@@ -1,5 +1,6 @@
 package com.edward.game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,6 @@ import com.edward.game.entities.Entity;
 import com.edward.game.entities.Platform;
 
 public class PlatformManager {
-	public double currentSpeed = .01;
 	List<Platform> platforms = new ArrayList<Platform>();
 	int platformCount = 0;
 	Screen screen;
@@ -26,6 +26,7 @@ public class PlatformManager {
 	
 	public void clear() {
 		this.platforms.clear();
+		platformCount = 0;
 	}
 
 	public void tick(long dt, Input input) {
@@ -44,11 +45,9 @@ public class PlatformManager {
 					platform.x = Math.random() * 400;
 				}
 			}
-			
-			
 		}
 
-		double targetY = -(this.target.y - 450 + 200);
+		double targetY = -(this.target.y - 450 + 300);
 		
 		double distance = targetY - this.offsetY;
 
@@ -57,7 +56,7 @@ public class PlatformManager {
 		}
 		
 		// move the camera automatically
-		//this.offsetY += (1 * (platformCount % 10)) * dt;
+		this.offsetY += (.05 * (platformCount / 10)) * dt;
 	}
 
 	public void render(Graphics g) {
@@ -80,7 +79,9 @@ public class PlatformManager {
 	public Platform getPlatformAt(double x, double y, int w, int h) {
 		for (int i = 0; i < platforms.size(); i++) {
 			Platform platform = platforms.get(i);
-
+			
+			platform.setColor(Color.getHSBColor((platformCount / 10) / 100f, 1.0f, 1.0f));
+			
 			double xx = platform.x;
 			double yy = platform.y;
 

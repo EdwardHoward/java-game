@@ -25,10 +25,12 @@ public class Screen {
 	}
 	
 	public void newGame() {
-		this.entities.clear();
-		
+		entities.clear();
+
 		Entity player = new Player(400 - 15, 450, 30, 30);
 		this.addEntity(player);
+		
+		platformManager.clear();
 		
 		// Set camera back down to bottom
 		platformManager.offsetY = 10;
@@ -38,7 +40,12 @@ public class Screen {
 
 		// Create 6 platforms equally spaced
 		for(int i = 0; i < 6; i++) { 
-			platformManager.createPlatform((int)(Math.random()* 400), 600 - 100 - (120 * i), 200, 40); 
+			int x = (int)(Math.random()* 400);
+			int y = 600 - 100 - (120 * i);
+			int width = 200;
+			int height = 40;
+			
+			platformManager.createPlatform(x, y, width, height); 
 		}
 		
 		// point the camera at the player
