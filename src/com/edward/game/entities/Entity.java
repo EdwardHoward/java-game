@@ -32,9 +32,7 @@ public abstract class Entity {
 		} else if(x + xVelocity < 0) {
 			// Hit right wall
 			this.x = 0;
-		}
-		else 
-		{
+		} else {
 			if (yVelocity > 0) {
 				Platform platformX = this.screen.platformManager.getPlatformAt(x + xVelocity, y, width, height);
 
