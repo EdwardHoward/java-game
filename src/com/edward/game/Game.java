@@ -15,20 +15,23 @@ import com.edward.game.entities.Player;
 public class Game extends Canvas implements Runnable, KeyListener{
 	private static final long serialVersionUID = 1L;
 	
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
+
 	boolean running = false;
 	
 	Screen screen;
 	Input input = new Input();
 	
 	public Game() {
-		this.setPreferredSize(new Dimension(800, 600));
+		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.addKeyListener(this);
 	}
 	
 	public static void main(String[] args) { 
 		JFrame frame = new JFrame();
 		frame.setResizable(false);
-		frame.setSize(new Dimension(800, 600));
+		frame.setSize(new Dimension(WIDTH, HEIGHT));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
@@ -73,7 +76,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
 		
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, 800, 600);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		this.screen.render(g);
 		

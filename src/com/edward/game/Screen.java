@@ -18,7 +18,7 @@ public class Screen {
 	public Screen(Game game) {
 		this.game = game;
 		
-		Entity player = new Player(400 - 15, 450, 30, 30);
+		Entity player = new Player((Game.WIDTH / 2) - 15, 450, 30, 30);
 		this.addEntity(player);
 		
 		this.platformManager.setTarget(player);
@@ -27,7 +27,7 @@ public class Screen {
 	public void newGame() {
 		entities.clear();
 
-		Entity player = new Player(400 - 15, 450, 30, 30);
+		Entity player = new Player((Game.WIDTH / 2) - 15, 450, 30, 30);
 		this.addEntity(player);
 		
 		platformManager.clear();
@@ -36,12 +36,12 @@ public class Screen {
 		platformManager.offsetY = 10;
 		
 		// Create the first floor
-		platformManager.createPlatform(0, 600 - 100, 800, 40);
+		platformManager.createPlatform(0, Game.HEIGHT - 100, Game.WIDTH, 40);
 
 		// Create 6 platforms equally spaced
 		for(int i = 0; i < 6; i++) { 
-			int x = (int)(Math.random()* 400);
-			int y = 600 - 100 - (120 * i);
+			int x = (int)(Math.random() * (Game.WIDTH / 2));
+			int y = Game.HEIGHT - 100 - (120 * i);
 			int width = 200;
 			int height = 40;
 			

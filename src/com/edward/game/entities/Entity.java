@@ -2,6 +2,7 @@ package com.edward.game.entities;
 
 import java.awt.Graphics;
 
+import com.edward.game.Game;
 import com.edward.game.Input;
 import com.edward.game.Screen;
 
@@ -26,9 +27,9 @@ public abstract class Entity {
 	}
 	
 	public void tryMove() {
-		if(x + xVelocity + width > 784) {
+		if(x + xVelocity + width > (Game.WIDTH - this.width)) {
 			// Hit left wall 
-			this.x = 784 - width;
+			this.x = (Game.WIDTH - this.width) - width;
 		} else if(x + xVelocity < 0) {
 			// Hit right wall
 			this.x = 0;
