@@ -19,8 +19,8 @@ public class Platform extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		int xa = (int) (x + this.screen.platformManager.offsetX);
-		int ya = (int) (y + this.screen.platformManager.offsetY);
+		int xa = (int) (x + this.screen.camera.x);
+		int ya = (int) (y + this.screen.camera.y);
 		
 		g.setColor(color);
 		g.fillRect(xa, ya, this.width, this.height);

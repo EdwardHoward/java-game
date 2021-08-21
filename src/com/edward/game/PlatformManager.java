@@ -10,15 +10,9 @@ import com.edward.game.entities.Platform;
 
 public class PlatformManager {
 	List<Platform> platforms = new ArrayList<Platform>();
+
 	int platformCount = 0;
 	Screen screen;
-
-	// This is like a camera
-	// example: g.fillRect(x + offsetX, y + offsetY, w, h);
-	public double offsetX = 0;
-	public double offsetY = 10;
-
-	Entity target;
 
 	public PlatformManager(Screen screen) {
 		this.screen = screen;
@@ -28,6 +22,20 @@ public class PlatformManager {
 		this.platforms.clear();
 		platformCount = 0;
 	}
+	
+	public Platform getHighestPlatform() {
+		Platform lowest = null;
+		
+		for(int i = 0; i < platforms.size(); i++) {
+			Platform platform = platforms.get(i);
+			
+			if(lowest == null || platform.y < lowest.y) {
+				lowest = platform;
+			}
+		}
+		
+		return lowest;
+	}
 
 	public void tick(long dt, Input input) {
 		for (int i = 0; i < platforms.size(); i++) {
@@ -36,27 +44,22 @@ public class PlatformManager {
 			platform.tick(dt, input);
 			
 			// When a platform goes below the screen send it back to the top
-			if(platform.y + offsetY >= 595) {
+			if(platform.y + screen.camera.y >= (Game.HEIGHT - 5)) {
 				platformCount++;
 				
-				platform.y = -offsetY - 120;
+				Platform highest = getHighestPlatform();
+				platform.y = highest.y - 120;
 				
-				if(platform.width != 800) {
-					platform.x = Math.random() * 400;
+				if(platform.width != Game.WIDTH) {
+					platform.x = Math.random() * (Game.WIDTH / 2);
 				}
+				
+				platform.setColor(Color.getHSBColor((platformCount / 10) / 100f, 1.0f, 1.0f));
 			}
 		}
 
-		double targetY = -(this.target.y - 450 + 300);
-		
-		double distance = targetY - this.offsetY;
-		
-		if(distance > 1) {
-			this.offsetY = lerp(offsetY, targetY, .05);
-		}
-		
-		// move the camera automatically
-		this.offsetY += (.05 * (platformCount / 10)) * dt;
+		// move the camera up automatically
+		screen.camera.y += (.05 * (platformCount / 10)) * dt;
 	}
 
 	public void render(Graphics g) {
@@ -64,10 +67,6 @@ public class PlatformManager {
 			Platform platform = platforms.get(i);
 			platform.render(g);
 		}
-	}
-
-	public double lerp(double a, double b, double t) {
-		return a + t * (b - a);
 	}
 
 	public void createPlatform(int x, int y, int width, int height) {
@@ -79,8 +78,6 @@ public class PlatformManager {
 	public Platform getPlatformAt(double x, double y, int w, int h) {
 		for (int i = 0; i < platforms.size(); i++) {
 			Platform platform = platforms.get(i);
-			
-			platform.setColor(Color.getHSBColor((platformCount / 10) / 100f, 1.0f, 1.0f));
 			
 			double xx = platform.x;
 			double yy = platform.y;
@@ -95,10 +92,5 @@ public class PlatformManager {
 		}
 
 		return null;
-	}
-
-	// Camera points at target
-	public void setTarget(Entity target) {
-		this.target = target;
 	}
 }

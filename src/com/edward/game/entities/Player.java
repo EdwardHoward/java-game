@@ -37,7 +37,7 @@ public class Player extends Entity {
 		}
 
 		// Player goes below the bottom of screen
-		if(y + this.screen.platformManager.offsetY >= 595) {
+		if(y + this.screen.camera.y >= 595) {
 			// End game
 			this.screen.newGame();
 		}
@@ -45,8 +45,8 @@ public class Player extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		int xp = (int) (x + this.screen.platformManager.offsetX);
-		int yp = (int) (y + this.screen.platformManager.offsetY);
+		int xp = (int) (x + this.screen.camera.x);
+		int yp = (int) (y + this.screen.camera.y);
 
 		g.setColor(Color.GREEN);
 		g.fillRect(xp, yp, width, height);

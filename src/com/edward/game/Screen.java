@@ -14,6 +14,7 @@ public class Screen {
 	private Game game;
 	private List<Entity> entities = new ArrayList<Entity>();
 	public PlatformManager platformManager = new PlatformManager(this);
+	public TargetCamera camera = new TargetCamera();
 	
 	public Screen(Game game) {
 		this.game = game;
@@ -21,7 +22,7 @@ public class Screen {
 		Entity player = new Player((Game.WIDTH / 2) - 15, 450, 30, 30);
 		this.addEntity(player);
 		
-		this.platformManager.setTarget(player);
+		this.camera.setTarget(player);
 	}
 	
 	public void newGame() {
@@ -33,15 +34,16 @@ public class Screen {
 		platformManager.clear();
 		
 		// Set camera back down to bottom
-		platformManager.offsetY = 10;
+		this.camera.y = 10;
 		
 		// Create the first floor
 		platformManager.createPlatform(0, Game.HEIGHT - 100, Game.WIDTH, 40);
 
 		// Create 6 platforms equally spaced
+		int platformSpacing = 120;
 		for(int i = 0; i < 6; i++) { 
 			int x = (int)(Math.random() * (Game.WIDTH / 2));
-			int y = Game.HEIGHT - 100 - (120 * i);
+			int y = Game.HEIGHT - 100 - (platformSpacing * i);
 			int width = 200;
 			int height = 40;
 			
@@ -49,7 +51,7 @@ public class Screen {
 		}
 		
 		// point the camera at the player
-		this.platformManager.setTarget(player);
+		this.camera.setTarget(player);
 	}
 	
 	public void tick(long dt, Input input) {
@@ -58,6 +60,8 @@ public class Screen {
 		}
 		
 		platformManager.tick(dt, input);
+		
+		camera.tick();
 	}
 	
 	public void render(Graphics g) {
