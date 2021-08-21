@@ -1,9 +1,12 @@
 package com.edward.game;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.edward.cameras.TargetCamera;
 import com.edward.game.entities.Entity;
 import com.edward.game.entities.Player;
 
@@ -41,7 +44,7 @@ public class Screen {
 
 		// Create 6 platforms equally spaced
 		int platformSpacing = 120;
-		for(int i = 0; i < 6; i++) { 
+		for(int i = 1; i < 6; i++) { 
 			int x = (int)(Math.random() * (Game.WIDTH / 2));
 			int y = Game.HEIGHT - 100 - (platformSpacing * i);
 			int width = 200;
@@ -64,13 +67,20 @@ public class Screen {
 		camera.tick();
 	}
 	
-	public void render(Graphics g) {
+	public void render(Graphics gg) {
+		
+		// Rotate screen for camera
+		Graphics2D g = (Graphics2D) gg;	
+		AffineTransform old = g.getTransform();
+		g.rotate(camera.angle, Game.WIDTH / 2, Game.HEIGHT / 2);
+		
 		platformManager.render(g);
 
 		entities.forEach((entity) -> {
 			entity.render(g);
 		});
 		
+		g.setTransform(old);
 	}
 	
 	public void addEntity(Entity e) {

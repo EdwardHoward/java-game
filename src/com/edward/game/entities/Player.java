@@ -2,6 +2,7 @@ package com.edward.game.entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 import com.edward.game.Input;
 import com.edward.game.Screen;
@@ -24,7 +25,13 @@ public class Player extends Entity {
 		}
 
 		if (input.isDownOnce(Input.JUMP) && onGround) {
-			this.yVelocity -= Math.random() > 0.9 ? 30 : 13;
+			boolean bigJump = Math.random() > 0.9;
+			
+			this.yVelocity -= bigJump ? 30 : 13;
+
+			double shake = bigJump ? .5 : 0;
+			this.screen.camera.shake(shake);
+			
 			onGround = false;
 		}
 		
@@ -45,12 +52,9 @@ public class Player extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		int xp = (int) (x + this.screen.camera.x);
-		int yp = (int) (y + this.screen.camera.y);
+		Point point = this.screen.camera.getDrawPosition(x, y);
 
 		g.setColor(Color.GREEN);
-		g.fillRect(xp, yp, width, height);
-		
-		g.fillRect(783, 100, 1, 1);
+		g.fillRect(point.x, point.y, width, height);
 	}
 }

@@ -2,6 +2,7 @@ package com.edward.game.entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 import com.edward.game.Input;
 
@@ -19,11 +20,10 @@ public class Platform extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		int xa = (int) (x + this.screen.camera.x);
-		int ya = (int) (y + this.screen.camera.y);
+		Point point = this.screen.camera.getDrawPosition(x, y);
 		
 		g.setColor(color);
-		g.fillRect(xa, ya, this.width, this.height);
+		g.fillRect(point.x, point.y, this.width, this.height);
 	}
 	
 	public void setSpeed(double speed) {

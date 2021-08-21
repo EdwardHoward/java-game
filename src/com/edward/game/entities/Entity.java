@@ -13,7 +13,7 @@ public abstract class Entity {
 	double speed;
 	boolean onGround = false;
 	
-	Screen screen;
+	protected Screen screen;
 	
 	public Entity(double x, double y, int w, int h) {
 		this.x = x;
@@ -65,7 +65,7 @@ public abstract class Entity {
 				// Land on top
 				this.yVelocity = 0;
 				this.y = platform.y - this.height;
-
+				
 				onGround = true;
 			}
 		}
