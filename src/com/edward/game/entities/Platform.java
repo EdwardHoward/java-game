@@ -9,6 +9,8 @@ import com.edward.game.Input;
 public class Platform extends Entity {
 	Color color = Color.YELLOW;
 	
+	public int index = 0;
+	
 	public Platform(double x, double y, int w, int h) {
 		super(x, y, w, h);
 	}

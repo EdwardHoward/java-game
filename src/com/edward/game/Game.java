@@ -6,13 +6,14 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
-import com.edward.game.entities.Player;
-
-public class Game extends Canvas implements Runnable, KeyListener{
+public class Game extends Canvas implements Runnable, KeyListener, MouseListener, MouseMotionListener{
 	private static final long serialVersionUID = 1L;
 	
 	public static final int WIDTH = 800;
@@ -26,6 +27,8 @@ public class Game extends Canvas implements Runnable, KeyListener{
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.addKeyListener(this);
+		this.addMouseListener(this);
+		this.addMouseMotionListener(this);
 	}
 	
 	public static void main(String[] args) { 
@@ -105,5 +108,44 @@ public class Game extends Canvas implements Runnable, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		input.setKey(e.getKeyCode(), false);
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		input.setMousePosition(e.getX(), e.getY());
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		input.setMouseDown(true);
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		input.setMouseDown(false);
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

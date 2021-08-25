@@ -9,6 +9,12 @@ import java.util.List;
 import com.edward.cameras.TargetCamera;
 import com.edward.game.entities.Entity;
 import com.edward.game.entities.Player;
+import com.edward.game.managers.BulletManager;
+import com.edward.game.managers.EventManager;
+import com.edward.game.managers.ParticleManager;
+import com.edward.game.managers.PlatformManager;
+import com.edward.game.managers.ToastManager;
+import com.edward.game.missions.MissionManager;
 
 public class Screen {
 	public static double GRAVITY = 0.5;
@@ -17,7 +23,15 @@ public class Screen {
 	private Game game;
 	private List<Entity> entities = new ArrayList<Entity>();
 	public PlatformManager platformManager = new PlatformManager(this);
+	public BulletManager bulletManager = new BulletManager(this);
+	public ParticleManager particleManager = new ParticleManager(this);
+	
+	public MissionManager missionManager = new MissionManager(this);
+	public ToastManager toastManager = new ToastManager(this);
+	
 	public TargetCamera camera = new TargetCamera();
+	
+	public EventManager events = new EventManager();
 	
 	public Screen(Game game) {
 		this.game = game;
@@ -47,7 +61,7 @@ public class Screen {
 		for(int i = 1; i < 6; i++) { 
 			int x = (int)(Math.random() * (Game.WIDTH / 2));
 			int y = Game.HEIGHT - 100 - (platformSpacing * i);
-			int width = 200;
+			int width = 150;
 			int height = 40;
 			
 			platformManager.createPlatform(x, y, width, height); 
@@ -63,6 +77,10 @@ public class Screen {
 		}
 		
 		platformManager.tick(dt, input);
+		bulletManager.tick(dt, input);
+		particleManager.tick(dt, input);
+		missionManager.tick(dt, input);
+		toastManager.tick(dt, input);
 		
 		camera.tick();
 	}
@@ -79,6 +97,14 @@ public class Screen {
 		entities.forEach((entity) -> {
 			entity.render(g);
 		});
+		
+		bulletManager.render(g);
+		
+		particleManager.render(g);
+		
+		missionManager.render(g);
+		
+		toastManager.render(g);
 		
 		g.setTransform(old);
 	}

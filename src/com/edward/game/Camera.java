@@ -17,7 +17,7 @@ public class Camera {
 			shakeIntensity = 0;
 		}
 		
-		double shake = Math.pow(shakeIntensity, 2);
+		double shake = Math.pow(shakeIntensity, 3);
 		
 		this.angle = 0.174533 * shake * (Math.random() * 3 - 1);
 	}
@@ -30,7 +30,7 @@ public class Camera {
 	}
 	
 	public Point getDrawPosition(double x2, double y2) {
-		double shake = Math.pow(shakeIntensity, 2);
+		double shake = Math.pow(shakeIntensity, 3);
 		
 		double xpShake = 10 * shake * (Math.random() * 3 - 1);
 		double ypShake = 10 * shake * (Math.random() * 3 - 1);
